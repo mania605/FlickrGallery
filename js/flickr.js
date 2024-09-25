@@ -1,4 +1,20 @@
 fetchFlickr("interest");
+
+// 두 개의 버튼 요소 선택
+const myGalleryBtn = document.querySelector("nav button:nth-of-type(1)");
+const popularGalleryBtn = document.querySelector("nav button:nth-of-type(2)");
+
+// My Gallery 버튼 클릭 시 mine 갤러리 출력
+myGalleryBtn.addEventListener("click", () => {
+  fetchFlickr("mine");
+});
+
+// Popular Gallery 버튼 클릭 시 interest 갤러리 출력
+popularGalleryBtn.addEventListener("click", () => {
+  fetchFlickr("interest");
+});
+
+
 //body요소에 클릭했을때 클릭한요소의 클래스명을 구분자로 설정
 //특정 요소에 특정 함수 연결
 document.body.addEventListener("click", (e) => {
