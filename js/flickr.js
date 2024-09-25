@@ -12,7 +12,6 @@ let url = `${baseURL}${method_mine}&user_id=${myID}&nojsoncallback=1&format=json
 fetch(url)
   .then((data) => data.json())
   .then((json) => {
-    console.log(json.photos.photo);
     const picArr = json.photos.photo;
     let tags = "";
 
@@ -20,7 +19,7 @@ fetch(url)
       tags += `
         <li>
           <figure class='pic'>
-            <img src="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg" alt={pic.title}
+            <img src="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg" alt=${pic.title} />
           </figure>
           <h2>${pic.title}</h2>
 
