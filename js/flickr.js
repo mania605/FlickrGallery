@@ -1,18 +1,18 @@
-fetchFlickr("interest");
+const [btnMine, btnPopular] = document.querySelectorAll("nav button");
 
-// 두 개의 버튼 요소 선택
-const myGalleryBtn = document.querySelector("nav button:nth-of-type(1)");
-const popularGalleryBtn = document.querySelector("nav button:nth-of-type(2)");
+// 스크립틑 처음 로딩시에는 내 갤러리 출력
+fetchFlickr("mine");
 
-// My Gallery 버튼 클릭 시 mine 갤러리 출력
-myGalleryBtn.addEventListener("click", () => {
+//각 버튼 클릭시 갤러리 타입변경
+btnMine.addEventListener("click", () => {
   fetchFlickr("mine");
-});
-
-// Popular Gallery 버튼 클릭 시 interest 갤러리 출력
-popularGalleryBtn.addEventListener("click", () => {
+});// My Gallery 버튼 클릭 시 mine 갤러리 출력
+btnPopular.addEventListener("click", () => {
   fetchFlickr("interest");
 });
+// Popular Gallery 버튼 클릭 시 interest 갤러리 출력
+
+
 
 
 //body요소에 클릭했을때 클릭한요소의 클래스명을 구분자로 설정
