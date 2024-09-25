@@ -1,17 +1,19 @@
-/* Error: Expected ".
- *   ,
- * 2 | @import url("<style>
- *   |                     ^
- *   '
- *   scss\style.scss 2:21  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: 'Error: Expected ".\a   \2577 \a 2 \2502  @import url("<style>\d\a   \2502                      ^\a   \2575 \a   scss\\style.scss 2:21  root stylesheet';
+@import url("https://fonts.googleapis.com/css2?family=Fredericka+the+Great&family=Handjet:wght@100..900&family=Jua&family=Noto+Sans+KR:wght@100..900&family=Orbitron:wght@400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:wght@100;400&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/*# sourceMappingURL=style.css.map */
