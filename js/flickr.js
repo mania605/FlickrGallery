@@ -1,21 +1,12 @@
 const [btnMine, btnPopular] = document.querySelectorAll("nav button");
 
-// 스크립틑 처음 로딩시에는 내 갤러리 출력
+//스크립트 처음 로드시에는 내갤러리 출력
 fetchFlickr("mine");
 
-//각 버튼 클릭시 갤러리 타입변경
-btnMine.addEventListener("click", () => {
-  fetchFlickr("mine");
-});// My Gallery 버튼 클릭 시 mine 갤러리 출력
-btnPopular.addEventListener("click", () => {
-  fetchFlickr("interest");
-});
-// Popular Gallery 버튼 클릭 시 interest 갤러리 출력
+//각 버튼 클릭시 갤러리 타입 변경
+btnMine.addEventListener("click", () => fetchFlickr("mine"));
+btnPopular.addEventListener("click", () => fetchFlickr("interest"));
 
-
-
-
-//body요소에 클릭했을때 클릭한요소의 클래스명을 구분자로 설정
 //특정 요소에 특정 함수 연결
 document.body.addEventListener("click", (e) => {
   if (e.target.className === "thumb") createModal(e);
@@ -32,13 +23,8 @@ function fetchFlickr(type) {
   const method_mine = "flickr.people.getPhotos";
   //method_interest는 flickr자체적으로 인기가 많은 이미지를 출력하는 메서드
   const method_interest = "flickr.interestingness.getList";
-
-  //아래 2가지 타입의 요청 url생성  url_mine(내갤러리 호출url), url_interest(플리커 인기이미지 호출url)
   let url_mine = `${baseURL}${method_mine}&user_id=${myID}&nojsoncallback=1&format=json`;
   let url_interest = `${baseURL}${method_interest}&nojsoncallback=1&format=json`;
-
-  //fetchFlickr함수 호출시 파라미터로 전달된 인수값이 mine이면 마이갤러리 요청 url을 fetch함수에 전달
-  //그렇지 않으면 인기이미지 요청 url을 fetch함수에 전달
   let result_url = type === "mine" ? url_mine : url_interest;
 
   fetch(result_url)
@@ -63,6 +49,18 @@ function fetchFlickr(type) {
       });
 
       list.innerHTML = tags;
+
+      const profilePic = document.querySelectorAll(".profile img");
+      console.log(profilePic);
+
+      profilePic.forEach(
+        (imgEl) =>
+        (imgEl.onerror = () =>
+          imgEl.setAttribute(
+            "src",
+            "https://www.flickr.com/images/buddyicon.gif"
+          ))
+      );
     });
 }
 
