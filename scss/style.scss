@@ -59,3 +59,84 @@ main {
     }
   }
 }
+
+/* 반응형 스타일링: 화면 크기에 따른 아이템 개수 조정 */
+@media screen and (max-width: 999px) {
+  main {
+    .list {
+      li {
+        width: 32%;
+
+        .pic {
+          height: 30vw;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 699px) {
+  main {
+    .list {
+      li {
+        width: 48%;
+
+        .pic {
+          height: 50vw;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 399px) {
+  main {
+    h1 {
+      font-size: 5vmax;
+    }
+    .list {
+      li {
+        width: 100%;
+
+        .pic {
+          height: 60vw;
+        }
+      }
+    }
+  }
+}
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal-content img {
+  max-width: 90vw;
+  max-height: 80vh;
+}
+
+.close-btn {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

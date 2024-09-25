@@ -19,7 +19,7 @@ fetch(url)
       tags += `
         <li>
           <figure class='pic'>
-            <img src="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg" alt=${pic.title} />
+          <img class='thumb' src="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_z.jpg" alt="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_z.jpg"/${pic.title} />
           </figure>
           <h2>${pic.title}</h2>
 
@@ -31,4 +31,80 @@ fetch(url)
     });
 
     list.innerHTML = tags;
+
+    //미션1 - 현재 img.thumb을 클릭시 레이어모달이 생성됨 처리
+
+    //미션2 - 동적으로 생성된 레이어팝업의 닫기버튼 클릭시 레이어모달 제거
+
+    //미션3 - img.thumb의 alt속성에 숨겨놓은 근해상도의 이미지에 url을 레이어 모달 안에 출력
+
+
+
+
+    // 미션 1: 이미지 클릭 시 레이어 모달 생성
+    const thumbs = document.querySelectorAll(".thumb");
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener("click", (e) => {
+        createModal(e.target.alt, e.target.title);
+      });
+    });
   });
+
+
+// 미션 1: 레이어 모달 생성 함수
+function createModal(imgSrc, imgTitle) {
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+  modal.innerHTML = `
+    <div class="modal-content">
+      <img src="${imgSrc}" alt="${imgTitle}" />
+      <p>${imgTitle}</p>
+      <button class="close-btn">Close</button>
+    </div>
+  `;
+  document.body.append(modal);
+
+  // 미션 2: 닫기 버튼 클릭 시 모달 제거
+  const closeBtn = modal.querySelector(".close-btn");
+  closeBtn.addEventListener("click", () => {
+    modal.remove();
+  });
+}
+
+// CSS: 모달 스타일 (적절한 위치에 추가)
+const style = document.createElement("style");
+style.innerHTML = `
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .modal-content img {
+    max-width: 90vw;
+    max-height: 80vh;
+  }
+
+  .close-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+`;
+document.head.append(style);
