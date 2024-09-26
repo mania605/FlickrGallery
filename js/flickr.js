@@ -14,9 +14,19 @@ document.body.addEventListener("click", (e) => {
 });
 
 
+
+//미션
+//- createList()라는 함수를 생성
+//- fetchFlickr함수에서 동적 리스트 생성하는 코드를 createList함수로 분리
+//- 인수로 데이터 배열을 전달받아 목록 출력
+
+
+
+
+
 //flickr fetching함수
 function fetchFlickr(type) {
-  const list = document.querySelector(".list");
+
   const api_key = "d0053a4bfac353553d2d0337fd052214";
   const baseURL = `https://www.flickr.com/services/rest/?api_key=${api_key}&method=`;
   const myID = "201491599@N03";
@@ -31,10 +41,17 @@ function fetchFlickr(type) {
     .then((data) => data.json())
     .then((json) => {
       const picArr = json.photos.photo;
-      let tags = "";
+      createList(picArr);
+    });
+}
+//목록 생성 함수
+function createList(dataArr) {
+  const list = document.querySelector(".list");
+  let tags = "";
 
-      picArr.forEach((pic) => {
-        tags += `
+
+  dataArr.forEach((pic) => {
+    tags += `
         <li>
           <figure class='pic'>
             <img class='thumb' src="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_z.jpg" alt="https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg" />
@@ -46,23 +63,23 @@ function fetchFlickr(type) {
           </div>
         </li>
       `;
-      });
+  });
 
-      list.innerHTML = tags;
+  list.innerHTML = tags;
 
-      const profilePic = document.querySelectorAll(".profile img");
-      console.log(profilePic);
+  const profilePic = document.querySelectorAll(".profile img");
+  console.log(profilePic);
 
-      profilePic.forEach(
-        (imgEl) =>
-        (imgEl.onerror = () =>
-          imgEl.setAttribute(
-            "src",
-            "https://www.flickr.com/images/buddyicon.gif"
-          ))
-      );
-    });
+  profilePic.forEach(
+    (imgEl) =>
+    (imgEl.onerror = () =>
+      imgEl.setAttribute(
+        "src",
+        "https://www.flickr.com/images/buddyicon.gif"
+      ))
+  );
 }
+
 
 //모달생성 함수
 function createModal(e) {
