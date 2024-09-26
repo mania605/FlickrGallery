@@ -14,10 +14,10 @@ btnMine.addEventListener("click", () => fetchFlickr({ type: "mine" }));
 btnPopular.addEventListener("click", () => fetchFlickr({ type: "interest" }));
 //검색 버튼 클릭시
 btnSearch.addEventListener("click", () => {
-  //인풋요소의 value값 (검색어)을 tags에 담아 fetchFlickr함수 호출
-  fetchFlickr({ type: "search", tags: inputSearch.value });
-  //호출시 input요소의 검색어는 지워줌
-  inputSearch.value = "";
+  //검색어를 입력하지 않고 검색버튼 클릭시 함수 강제중지
+  if (!inputSearch.value) return;
+  fetchFlickr({ type: "search", tags: inputSearch.value });   //인풋요소의 value값 (검색어)을 tags에 담아 fetchFlickr함수 호출
+  inputSearch.value = "";  //호출시 input요소의 검색어는 지워줌
 });
 //특정 요소에 특정 함수 연결
 document.body.addEventListener("click", (e) => {
@@ -32,10 +32,12 @@ document.body.addEventListener("click", (e) => {
 function fetchFlickr(opt) { //type이 opt라는 파라미터 객체안쪽에 들어가 있기 때문에 opt.type
   //인수로 전달된 type정보와 현재 출력되고 있는 dataType이 동일하면
   //다시 data fetching할 필요가 없으므로  return으로 강제 함수 종료
-  //만약 타입이 다르면 해당 if문 무시
-  if (opt.type === dataType) return;
-  //인수로 전달된 타입명으로 현재 dataType을 변경
-  dataType = opt.type;
+  if (opt.type === "search") {
+    if (opt.tags)
+}
+
+  if (opt.type === dataType) return;  //만약 타입이 다르면 해당 if문 무시
+  dataType = opt.type;//인수로 전달된 타입명으로 현재 dataType을 변경
 
   const api_key = "d0053a4bfac353553d2d0337fd052214";
   const baseURL = `https://www.flickr.com/services/rest/?api_key=${api_key}&method=`;
