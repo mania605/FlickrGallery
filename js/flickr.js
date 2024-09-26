@@ -1,13 +1,12 @@
-let dataType = "";
-const [btnMine, btnPopular] = document.querySelectorAll("nav button");
-//searchBox안쪽에 있는 두번째 요소인 input, 세번째 요소인 btnSearch를 비구조할당으로 변수할당
-const [_, inputSearch, btnSearch] = document.querySelector(".searchBox").children;
-console.log(inputSearch);
+//{type:'Search',tags:'sky'}
+//{"{type:"Search}
 
-//스크립트 처음 로드시에는 내갤러리 출력
-///fetch함수 호출시 인수값을 객체 형태로 전달
-///이유 search,user타입 갤러리는 타입 외에도 유저명, 검색어 등의 추가 정보값을 제공해야 되기 때문
-fetchFlickr({ type: "mine" });
+
+let optstring = "";
+const [btnMine, btnPopular] = document.querySelectorAll("nav button");
+const [_, inputSearch, btnSearch] = document.querySelector(".searchBox").children;//searchBox안쪽에 있는 두번째 요소인 input, 세번째 요소인 btnSearch를 비구조할당으로 변수할당
+
+fetchFlickr({ type: "mine" });//스크립트 처음 로드시에는 내갤러리 출력  ///fetch함수 호출시 인수값을 객체 형태로 전달 ///이유 search,user타입 갤러리는 타입 외에도 유저명, 검색어 등의 추가 정보값을 제공해야 되기 때문///이유 search,user타입 갤러리는 타입 외에도 유저명, 검색어 등의 추가 정보값을 제공해야 되기 때문
 
 //각 버튼 클릭시 갤러리 타입 변경
 btnMine.addEventListener("click", () => fetchFlickr({ type: "mine" }));
@@ -30,14 +29,13 @@ document.body.addEventListener("click", (e) => {
 
 //flickr fetching함수
 function fetchFlickr(opt) { //type이 opt라는 파라미터 객체안쪽에 들어가 있기 때문에 opt.type
-  //인수로 전달된 type정보와 현재 출력되고 있는 dataType이 동일하면
-  //다시 data fetching할 필요가 없으므로  return으로 강제 함수 종료
-  if (opt.type === "search") {
-    if (opt.tags)
-}
-
-  if (opt.type === dataType) return;  //만약 타입이 다르면 해당 if문 무시
-  dataType = opt.type;//인수로 전달된 타입명으로 현재 dataType을 변경
+  //참조링크 비교가 아닌 값 자체를 비교하기 위해서
+  //opt객체를 강제로 문자화해서 stringifyOpt변수에 저장
+  let stringifyOpt = JSON.stringify(opt);
+  //문자화된 옵션객체 자체를 비교처리
+  if (stringifyOpt === optString) return;
+  //문자화된 옵션 객체를 전역변수는 optString에 저장해서 다음번 비교에 사용
+  optString = stringifyOpt;
 
   const api_key = "d0053a4bfac353553d2d0337fd052214";
   const baseURL = `https://www.flickr.com/services/rest/?api_key=${api_key}&method=`;
