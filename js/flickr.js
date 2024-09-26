@@ -3,17 +3,33 @@
 
 let optString = "";
 const [btnMine, btnPopular] = document.querySelectorAll("nav button");
-const [_, inputSearch, btnSearch] = document.querySelector(".searchBox").children;//searchBox안쪽에 있는 두번째 요소인 input, 세번째 요소인 btnSearch를 비구조할당으로 변수할당
+const searchBox = document.querySelector(".searchBox");
+const inputSearch = searchBox.querySelector("input");
 
 fetchFlickr({ type: "mine" });//스크립트 처음 로드시에는 내갤러리 출력  ///fetch함수 호출시 인수값을 객체 형태로 전달 ///이유 search,user타입 갤러리는 타입 외에도 유저명, 검색어 등의 추가 정보값을 제공해야 되기 때문///이유 search,user타입 갤러리는 타입 외에도 유저명, 검색어 등의 추가 정보값을 제공해야 되기 때문
 
 btnMine.addEventListener("click", () => fetchFlickr({ type: "mine" }));//각 버튼 클릭시 갤러리 타입 변경
 btnPopular.addEventListener("click", () => fetchFlickr({ type: "interest" }));
-btnSearch.addEventListener("click", () => {
-  if (!inputSearch.value) return;    //검색어를 입력하지 않고 검색버튼 클릭시 함수 강제중지
-  fetchFlickr({ type: "search", tags: inputSearch.value });   //인풋요소의 value값 (검색어)을 tags에 담아 fetchFlickr함수 호출
-  inputSearch.value = "";  //호출시 input요소의 검색어는 지워줌
+
+//form요소에 직접 submit이벤트 연결
+searchBox.addEventListener("submit", e => {
+  //해당 폼요를 실제 서버로 전달할 것이 아니기에
+  //e.preventDefault()로 form전송 기능을 막아줌
+  e.preventDefault();
+  if (!inputSearch.value) return;
+  fetchFlickr({ type: "search", tags: inputSearch.value });
+  inputSearch.value = "";//호출시 input요소의 검색어는 지워줌
 });
+
+// // 엔터키 눌렀을 때 검색 실행
+// inputSearch.addEventListener("keydown", (e) => {
+//   if (e.key === "Enter") {   // 키보드의 Enter 키가 눌렸을 때만 실행
+//     if (!inputSearch.value) return;  // 검색어가 없는 경우에는 종료
+//     fetchFlickr({ type: "search", tags: inputSearch.value });  // 검색 실행
+//     inputSearch.value = "";  // 검색 후 input 필드 비우기
+//   }
+// });
+
 
 document.body.addEventListener("click", (e) => { //특정 요소에 특정 함수 연결
   if (e.target.className === "thumb") createModal(e);
