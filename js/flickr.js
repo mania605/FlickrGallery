@@ -1,4 +1,5 @@
 const [btnMine, btnPopular] = document.querySelectorAll("nav button");
+let dataType = "";
 
 //스크립트 처음 로드시에는 내갤러리 출력
 fetchFlickr("mine");
@@ -13,15 +14,20 @@ document.body.addEventListener("click", (e) => {
   if (e.target.className === "btnClose") removeModal();
 });
 
-//미션 //- createList()라는 함수를 생성 //- fetchFlickr함수에서 동적 리스트 생성하는 코드를 createList함수로 분리 //- 인수로 데이터 배열을 전달받아 목록 출력
-
 //flickr fetching함수
 function fetchFlickr(type) {
+  //인수로 전달된 type정보와 현재 출력되고 있는 dataType이 동일하면
+  //다시 data fetching할 필요가 없으므로  return으로 강제 함수 종료
+  //만약 타입이 다르면 해당 if문 무시
+  if (type === dataType) return;
+  //인수로 전달된 타입명으로 현재 dataType을 변경
+  dataType = type;
+
+
   const api_key = "d0053a4bfac353553d2d0337fd052214";
   const baseURL = `https://www.flickr.com/services/rest/?api_key=${api_key}&method=`;
   const myID = "201491599@N03";
   const method_mine = "flickr.people.getPhotos";
-  //method_interest는 flickr자체적으로 인기가 많은 이미지를 출력하는 메서드
   const method_interest = "flickr.interestingness.getList";
   let url_mine = `${baseURL}${method_mine}&user_id=${myID}&nojsoncallback=1&format=json`;
   let url_interest = `${baseURL}${method_interest}&nojsoncallback=1&format=json`;
@@ -34,12 +40,12 @@ function fetchFlickr(type) {
       createList(picArr);
     });
 }
+
 //목록 생성 함수
 function createList(dataArr) {
   const list = document.querySelector(".list");
   let tags = "";
 
-  //pic을 data로 변경
   dataArr.forEach((pic) => {
     tags += `
         <li>
@@ -57,12 +63,11 @@ function createList(dataArr) {
 
   list.innerHTML = tags;
 
-  //createList안쪽에서 프로필 이미지 엑박시 대체이미지 바꿔치키 하는 기능을 또다른 함수로 분리
   setDefImg();
 }
+
 //이미지 엑박시 대체이미지 연결 함수
 function setDefImg() {
-
   const profilePic = document.querySelectorAll(".profile img");
   console.log(profilePic);
 
@@ -76,14 +81,9 @@ function setDefImg() {
   );
 }
 
-
-
-
-
 //모달생성 함수
 function createModal(e) {
   const imgSrc = e.target.getAttribute("alt");
-
   const modal = document.createElement("aside");
   modal.classList.add("modal");
   modal.innerHTML = `
