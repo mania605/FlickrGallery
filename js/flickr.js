@@ -13,20 +13,10 @@ document.body.addEventListener("click", (e) => {
   if (e.target.className === "btnClose") removeModal();
 });
 
-
-
-//미션
-//- createList()라는 함수를 생성
-//- fetchFlickr함수에서 동적 리스트 생성하는 코드를 createList함수로 분리
-//- 인수로 데이터 배열을 전달받아 목록 출력
-
-
-
-
+//미션 //- createList()라는 함수를 생성 //- fetchFlickr함수에서 동적 리스트 생성하는 코드를 createList함수로 분리 //- 인수로 데이터 배열을 전달받아 목록 출력
 
 //flickr fetching함수
 function fetchFlickr(type) {
-
   const api_key = "d0053a4bfac353553d2d0337fd052214";
   const baseURL = `https://www.flickr.com/services/rest/?api_key=${api_key}&method=`;
   const myID = "201491599@N03";
@@ -49,7 +39,7 @@ function createList(dataArr) {
   const list = document.querySelector(".list");
   let tags = "";
 
-
+  //pic을 data로 변경
   dataArr.forEach((pic) => {
     tags += `
         <li>
@@ -67,6 +57,12 @@ function createList(dataArr) {
 
   list.innerHTML = tags;
 
+  //createList안쪽에서 프로필 이미지 엑박시 대체이미지 바꿔치키 하는 기능을 또다른 함수로 분리
+  setDefImg();
+}
+//이미지 엑박시 대체이미지 연결 함수
+function setDefImg() {
+
   const profilePic = document.querySelectorAll(".profile img");
   console.log(profilePic);
 
@@ -79,6 +75,9 @@ function createList(dataArr) {
       ))
   );
 }
+
+
+
 
 
 //모달생성 함수
